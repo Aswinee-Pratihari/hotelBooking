@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/UserModel.js";
+import { TokenVerification } from "../middleware/TokenVerification.js";
 
 const router = express.Router();
 
@@ -34,8 +35,15 @@ router.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
     });
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET);
+
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+
     newUser.password = undefined;
-    return res.status(201).json(newUser);
+    res.status(200).json({ user: newUser, token: token });
   } catch (error) {
     console.log("Register error ", error);
     return res.status(500).json({ error: error.message });
@@ -45,6 +53,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(req.body);
   if (!email || !password)
     return res
       .status(400)
@@ -70,9 +79,16 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
-    res.status(200).json({ userId: userExist._id, token: token });
+
+    const user = { ...userExist._doc, password: undefined };
+
+    res.status(200).json({ user, token: token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+router.get("/checkUser", TokenVerification, async (req, res) => {
+  res.status(200).json(req.user);
 });
 export default router;

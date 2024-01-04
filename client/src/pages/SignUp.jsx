@@ -13,6 +13,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     await register(formData);
   };
   const handleChange = (e) => {
