@@ -5,6 +5,8 @@ import Layout from "./layouts/Layout";
 import RegistrationLayout from "./layouts/RegistrationLayout";
 import SignUp from "./pages/SignUp";
 import { AuthProvider } from "./context/authContext";
+import ProtectedLayout from "./layouts/ProtectedLayout";
+import ProtectedPage from "./pages/ProtectedPage";
 function App() {
   return (
     <Router>
@@ -35,6 +37,14 @@ function App() {
                 {" "}
                 <SignUp />
               </RegistrationLayout>
+            }
+          />
+          <Route
+            path="/protect"
+            element={
+              <ProtectedLayout>
+                <ProtectedPage />
+              </ProtectedLayout>
             }
           />
         </Routes>
