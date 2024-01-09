@@ -8,49 +8,52 @@ import { AuthProvider } from "./context/authContext";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import ProtectedPage from "./pages/ProtectedPage";
 import AddHotel from "./pages/AddHotel";
+import { HotelProvider } from "./context/hotelContext";
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Layout>
-                {" "}
-                <Home />{" "}
-              </Layout>
-            }
-          />
-          <Route
-            path="/signIn"
-            element={
-              <RegistrationLayout>
-                {" "}
-                <SignIn />
-              </RegistrationLayout>
-            }
-          />
-          <Route
-            path="/signUp"
-            element={
-              <RegistrationLayout>
-                {" "}
-                <SignUp />
-              </RegistrationLayout>
-            }
-          />
-          <Route
-            path="/addHotel"
-            element={
-              <ProtectedLayout>
+        <HotelProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  {" "}
+                  <Home />{" "}
+                </Layout>
+              }
+            />
+            <Route
+              path="/signIn"
+              element={
                 <RegistrationLayout>
-                  <AddHotel />
+                  {" "}
+                  <SignIn />
                 </RegistrationLayout>
-              </ProtectedLayout>
-            }
-          />
-        </Routes>
+              }
+            />
+            <Route
+              path="/signUp"
+              element={
+                <RegistrationLayout>
+                  {" "}
+                  <SignUp />
+                </RegistrationLayout>
+              }
+            />
+            <Route
+              path="/addHotel"
+              element={
+                <ProtectedLayout>
+                  <RegistrationLayout>
+                    <AddHotel />
+                  </RegistrationLayout>
+                </ProtectedLayout>
+              }
+            />
+          </Routes>
+        </HotelProvider>
       </AuthProvider>
     </Router>
   );

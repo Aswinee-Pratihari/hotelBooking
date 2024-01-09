@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { hotelFacilities, hotelTypes } from "../../config/hotelType.config";
 import DetailsSection from "./DetailsSection";
 import ResidencyTypeSection from "./ResidencyTypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import ImageSection from "./ImageSection";
+import { HotelContext } from "../../context/hotelContext";
 
 const AddHotelForm = ({
   handleCheckboxChange,
@@ -12,8 +13,10 @@ const AddHotelForm = ({
   handleChange,
   handleSubmit,
 }) => {
+  const { loading } = useContext(HotelContext);
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
       {/* //price and rating options */}
       <DetailsSection formData={formData} handleChange={handleChange} />
 
@@ -28,9 +31,10 @@ const AddHotelForm = ({
       <div className="bottom flex justify-between items-center">
         <button
           type="submit"
-          className="text-white bg-blue-800 px-3 py-2 rounded-md hover:bg-blue-600 font-semibold text-lg"
+          disabled={loading}
+          className="disabled:bg-gray-300 text-white bg-blue-800 px-3 py-2 rounded-md hover:bg-blue-600 font-semibold text-lg"
         >
-          Add Your Hotel
+          {loading ? "Saving..." : "Add Your Hotel"}
         </button>
       </div>
     </form>
