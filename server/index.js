@@ -4,6 +4,7 @@ import "dotenv/config";
 import connectDB from "./utils/db.js";
 import UserRoute from "./routes/users.js";
 import MyHotelRoute from "./routes/my-hotels.js";
+import HotelRoute from "./routes/hotel.js";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/api/my-hotels", MyHotelRoute);
+app.use("/api/hotels", HotelRoute);
 app.use("/api/user", UserRoute);
 app.get("/", (req, res) => {
   res.send("hello world");

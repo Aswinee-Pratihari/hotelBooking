@@ -9,11 +9,13 @@ import ProtectedLayout from "./layouts/ProtectedLayout";
 import ProtectedPage from "./pages/ProtectedPage";
 import AddHotel from "./pages/AddHotel";
 import { HotelProvider } from "./context/hotelContext";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <Router>
       <AuthProvider>
         <HotelProvider>
+          <Toaster />
           <Routes>
             <Route
               path="/"

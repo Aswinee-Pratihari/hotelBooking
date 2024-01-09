@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { hotelFacilities, hotelTypes } from "../config/hotelType.config";
 import AddHotelForm from "../components/forms/AddHotelForm";
@@ -9,7 +9,7 @@ import { HotelContext } from "../context/hotelContext";
 const AddHotel = () => {
   const { user } = useContext(AuthContext);
   const { addNewHotel, loading } = useContext(HotelContext);
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userId: user?._id || "",
     hotelName: "",
@@ -48,6 +48,7 @@ const AddHotel = () => {
     });
 
     await addNewHotel(formDataToSend);
+    navigate("/");
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

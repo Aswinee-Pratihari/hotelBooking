@@ -1,13 +1,17 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const HotelContext = createContext();
 export const HotelProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [AllhotelData, setAllHotelData] = useState(null);
+  const [allhotelData, setAllHotelData] = useState(null);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
+  useEffect(() => {
+    getAllHotel();
+  }, []);
   const headers = {
     "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${localStorage?.getItem("token")}`,
@@ -25,14 +29,22 @@ export const HotelProvider = ({ children }) => {
       });
 
       const data = await response.data;
+      toast.success("Hotel created Successfully");
     } catch (error) {
       console.log(error);
+      toast.failure("Error in creating Hotel");
     } finally {
       setLoading(false);
     }
   };
+
+  const getAllHotel = async () => {
+    const res = await axios.get(`${BASE_URL}/hotels`);
+    const allHotels = await res.data;
+    setAllHotelData(allHotels);
+  };
   return (
-    <HotelContext.Provider value={{ loading, addNewHotel }}>
+    <HotelContext.Provider value={{ loading, addNewHotel, allhotelData }}>
       {children}
     </HotelContext.Provider>
   );
