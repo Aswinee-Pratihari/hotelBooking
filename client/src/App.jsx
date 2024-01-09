@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import { AuthProvider } from "./context/authContext";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import ProtectedPage from "./pages/ProtectedPage";
+import AddHotel from "./pages/AddHotel";
 function App() {
   return (
     <Router>
@@ -40,10 +41,12 @@ function App() {
             }
           />
           <Route
-            path="/protect"
+            path="/addHotel"
             element={
               <ProtectedLayout>
-                <ProtectedPage />
+                <RegistrationLayout>
+                  <AddHotel />
+                </RegistrationLayout>
               </ProtectedLayout>
             }
           />
