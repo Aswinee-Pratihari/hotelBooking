@@ -10,7 +10,7 @@ const Home = () => {
       {allhotelData?.map((hotel) => {
         return (
           <Link
-            to={`/detail/${hotel._id}`}
+            to={`/hotelDetails/${hotel._id}`}
             className=" cursor-pointer overflow-hidden rounded-md"
           >
             <LatestHotelCard hotel={hotel} />

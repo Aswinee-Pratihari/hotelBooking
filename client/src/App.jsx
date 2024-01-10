@@ -10,6 +10,7 @@ import ProtectedPage from "./pages/ProtectedPage";
 import AddHotel from "./pages/AddHotel";
 import { HotelProvider } from "./context/hotelContext";
 import { Toaster } from "react-hot-toast";
+import HotelDetails from "./pages/HotelDetails";
 function App() {
   return (
     <Router>
@@ -52,6 +53,15 @@ function App() {
                     <AddHotel />
                   </RegistrationLayout>
                 </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/hotelDetails/:id"
+              element={
+                <RegistrationLayout>
+                  {" "}
+                  <HotelDetails />
+                </RegistrationLayout>
               }
             />
           </Routes>

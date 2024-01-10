@@ -13,4 +13,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id.toString();
+    const hotel = await Hotel.findById(id);
+
+    // if (!hotel) {
+    //   return res.status(404).json("Hotel not found");
+    // }
+    return res.status(200).json(hotel);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
 export default router;
