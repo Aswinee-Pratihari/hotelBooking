@@ -2,7 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { HotelContext } from "../context/hotelContext";
 
-import { FaHotel, FaRupeeSign, FaStar } from "react-icons/fa";
+import { FaChild, FaHotel, FaRupeeSign, FaStar } from "react-icons/fa";
+import { IoIosMan } from "react-icons/io";
+
 const MyHotels = () => {
   const { id } = useParams();
   const { getAllMyHotels, myHotels } = useContext(HotelContext);
@@ -16,7 +18,6 @@ const MyHotels = () => {
 
   console.log(myHotels);
 
-  const facilities = ["spa", "room", "hello", "chalo"];
   return (
     <main className="mt-5">
       <div className="flex items-center justify-between">
@@ -40,6 +41,7 @@ const MyHotels = () => {
           pricePerNight,
           imageUrls,
           starRating,
+          _id,
         } = hotel;
         return (
           <div className="hotelCard border-2 shadow-md p-4 my-4 rounded-md ">
@@ -57,14 +59,23 @@ const MyHotels = () => {
                     {pricePerNight}
                   </span>
                   <span className="text-lg font-medium border-2 px-4 py-2 flex gap-2 items-center">
+                    <IoIosMan />
+                    {adultGuest}
+                    <FaChild />
+                    {childGuest}
+                  </span>
+                  <span className="text-lg font-medium border-2 px-4 py-2 flex gap-2 items-center">
                     <FaStar />
                     {starRating}
                   </span>
                 </div>
 
-                <button className="text-white bg-blue-600 px-3 py-2 rounded-md hover:bg-blue-900 font-semibold text-lg self-start">
+                <Link
+                  to={`/editHotel/${_id}`}
+                  className="text-white bg-blue-600 px-3 py-2 rounded-md hover:bg-blue-900 font-semibold text-lg self-start"
+                >
                   Edit Hotel
-                </button>
+                </Link>
               </div>
               <img
                 src={imageUrls[0]}

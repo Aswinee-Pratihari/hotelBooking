@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import Hotel from "../models/HotelModel.js";
 import { TokenVerification } from "../middleware/TokenVerification.js";
 import getDataUri from "../utils/dataUri.js";
+import mongoose from "mongoose";
 const router = express.Router();
 
 const storage = multer.memoryStorage();
@@ -45,6 +46,37 @@ router.get("/:id", TokenVerification, async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.put("/:id", TokenVerification, async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: "no id specified." });
+  if (!mongoose.isValidObjectId(id))
+    return res.status(400).json({ error: "please enter a valid id" });
+
+  try {
+    const newHotel = req.body;
+
+    const existingHotel = await Hotel.findOne({ _id: id });
+
+    if (req.user._id.toString() !== existingHotel.userId.toString())
+      return res
+        .status(401)
+        .json({ error: "you can't edit other people contacts!" });
+
+    newHotel.lastUpdated = new Date();
+
+    const updatedHotel = await Hotel.findByIdAndUpdate(id, newHotel, {
+      new: true,
+    });
+    // const hotel = await Hotel.create(newHotel);
+    return res.status(201).json(updatedHotel);
+    //  return res.status(201).json("Hotel Edited");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
 async function uploadImages(imageFiles) {
   const uploadPromises = imageFiles.map(async (image) => {
     const result = getDataUri(image);

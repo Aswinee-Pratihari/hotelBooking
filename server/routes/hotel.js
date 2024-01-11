@@ -12,6 +12,30 @@ router.get("/", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+router.get("/search", async (req, res) => {
+  try {
+    const pageSize = 2;
+    const pageNumber = parseInt(req.query.page ? req.query.page.toString() : 1);
+    const skip = (pageNumber - 1) * pageSize;
+    const hotels = await Hotel.find().skip(skip).limit(pageSize);
+    if (!hotels) {
+      return res.status(404).json("Hotels not found");
+    }
+    const total = await Hotel.countDocuments();
+    const response = {
+      data: hotels,
+      pagination: {
+        total,
+        page: pageNumber,
+        pages: Math.ceil(total / pageSize),
+      },
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("something went wrong");
+  }
+});
 
 router.get("/:id", async (req, res) => {
   try {
@@ -27,4 +51,5 @@ router.get("/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
 export default router;
