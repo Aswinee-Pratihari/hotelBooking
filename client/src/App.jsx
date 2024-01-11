@@ -11,6 +11,7 @@ import AddHotel from "./pages/AddHotel";
 import { HotelProvider } from "./context/hotelContext";
 import { Toaster } from "react-hot-toast";
 import HotelDetails from "./pages/HotelDetails";
+import MyHotels from "./pages/MyHotels";
 function App() {
   return (
     <Router>
@@ -61,6 +62,15 @@ function App() {
                 <RegistrationLayout>
                   {" "}
                   <HotelDetails />
+                </RegistrationLayout>
+              }
+            />
+            <Route
+              path="/myHotels/:id"
+              element={
+                <RegistrationLayout>
+                  {" "}
+                  <MyHotels />
                 </RegistrationLayout>
               }
             />

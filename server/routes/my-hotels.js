@@ -34,6 +34,17 @@ router.post(
   }
 );
 
+router.get("/:id", TokenVerification, async (req, res) => {
+  try {
+    const id = req.params.id.toString();
+
+    const hotels = await Hotel.find({ userId: id });
+    return res.status(200).json(hotels);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
 async function uploadImages(imageFiles) {
   const uploadPromises = imageFiles.map(async (image) => {
     const result = getDataUri(image);

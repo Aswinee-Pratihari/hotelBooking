@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const user = await res?.data;
 
-      console.log(user);
+      // console.log(user);
       if (user) {
         setUser(user);
         if (location.pathname == "/signIn" || location.pathname == "/signUp") {

@@ -15,6 +15,13 @@ const Header = () => {
             <div className="flex gap-3 items-center">
               <h4 className="text-lg text-white ">Hello {user.firstName}</h4>
 
+              <Link
+                to={`/myHotels/${user?._id}`}
+                className="text-white     hover:underline font-semibold text-lg"
+              >
+                My Hotels
+              </Link>
+
               <button className="bg-white text-blue-600 px-3 py-2 rounded-md hover:bg-gray-300 font-semibold text-lg">
                 Sign Out
               </button>

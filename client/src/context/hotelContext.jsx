@@ -8,6 +8,7 @@ export const HotelProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [allhotelData, setAllHotelData] = useState(null);
   const [singleHotel, setSingleHotel] = useState(null);
+  const [myHotels, setMyHotels] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   useEffect(() => {
     getAllHotel();
@@ -49,8 +50,16 @@ export const HotelProvider = ({ children }) => {
     const hotel = await res.data;
     setSingleHotel(hotel);
     return hotel;
-    // console.log(hotel);
-    // setAllHotelData(allHotels);
+  };
+
+  const getAllMyHotels = async (id) => {
+    const res = await axios.get(`${BASE_URL}/my-hotels/${id}`, {
+      headers: headers,
+    });
+    const hotels = await res.data;
+    console.log(hotels);
+    setMyHotels(hotels);
+    return hotels;
   };
   return (
     <HotelContext.Provider
@@ -60,6 +69,8 @@ export const HotelProvider = ({ children }) => {
         allhotelData,
         getSingleHotel,
         singleHotel,
+        getAllMyHotels,
+        myHotels,
       }}
     >
       {children}
