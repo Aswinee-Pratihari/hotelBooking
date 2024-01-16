@@ -14,14 +14,32 @@ router.get("/", async (req, res) => {
 });
 router.get("/search", async (req, res) => {
   try {
-    const pageSize = 2;
+    const query = constructSearchQuery(req.query);
+
+    let sortOptions = {};
+    switch (req.query.sortOption) {
+      case "starRating":
+        sortOptions = { starRating: -1 };
+        break;
+      case "pricePerNightAsc":
+        sortOptions = { pricePerNight: 1 };
+        break;
+      case "pricePerNightDesc":
+        sortOptions = { pricePerNight: -1 };
+        break;
+    }
+
+    const pageSize = 5;
     const pageNumber = parseInt(req.query.page ? req.query.page.toString() : 1);
     const skip = (pageNumber - 1) * pageSize;
-    const hotels = await Hotel.find().skip(skip).limit(pageSize);
+    const hotels = await Hotel.find(query)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(pageSize);
     if (!hotels) {
       return res.status(404).json("Hotels not found");
     }
-    const total = await Hotel.countDocuments();
+    const total = await Hotel.countDocuments(query);
     const response = {
       data: hotels,
       pagination: {
@@ -52,4 +70,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+const constructSearchQuery = (queryParams) => {
+  let constructedQuery = {};
+
+  if (queryParams.maxPrice) {
+    constructedQuery.pricePerNight = {
+      $lte: parseInt(queryParams.maxPrice).toString(),
+    };
+  }
+
+  return constructedQuery;
+};
 export default router;
