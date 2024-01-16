@@ -61,6 +61,25 @@ export const HotelProvider = ({ children }) => {
     setMyHotels(hotels);
     return hotels;
   };
+
+  const searchHotel = async (searchParams) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("destination", searchParams?.destination || "");
+    queryParams.append("checkIn", searchParams?.checkIn || "");
+    queryParams.append("checkOut", searchParams?.checkOut || "");
+    queryParams.append("adultCount", searchParams?.adultCount || "");
+    queryParams.append("childCount", searchParams?.childCount || "");
+    queryParams.append("page", searchParams?.page || "");
+
+    try {
+      const res = await axios.get(`${BASE_URL}/hotels/search?${queryParams}`);
+      const hotels = await res?.data;
+      return hotels;
+      console.log(hotels);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <HotelContext.Provider
       value={{
@@ -71,6 +90,7 @@ export const HotelProvider = ({ children }) => {
         singleHotel,
         getAllMyHotels,
         myHotels,
+        searchHotel,
       }}
     >
       {children}

@@ -12,6 +12,7 @@ import { HotelProvider } from "./context/hotelContext";
 import { Toaster } from "react-hot-toast";
 import HotelDetails from "./pages/HotelDetails";
 import MyHotels from "./pages/MyHotels";
+import Search from "./pages/Search";
 function App() {
   return (
     <Router>
@@ -71,6 +72,16 @@ function App() {
                 <RegistrationLayout>
                   {" "}
                   <MyHotels />
+                </RegistrationLayout>
+              }
+            />
+
+            <Route
+              path="/search"
+              element={
+                <RegistrationLayout>
+                  {" "}
+                  <Search />
                 </RegistrationLayout>
               }
             />

@@ -112,7 +112,7 @@ const DetailsSection = ({ formData, handleChange }) => {
               Select as Rating
             </option>
             {[1, 2, 3, 4, 5].map((num) => (
-              <option value={formData.rating} onChange={handleChange}>
+              <option value={formData.starRating} onChange={handleChange}>
                 {num}
               </option>
             ))}

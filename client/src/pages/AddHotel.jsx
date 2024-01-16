@@ -18,7 +18,7 @@ const AddHotel = () => {
     country: "",
     pricePerNight: 100,
     type: "Family",
-    rating: 1,
+    starRating: 1,
     facilities: [],
     childGuest: 0,
     adultGuest: 1,
@@ -36,7 +36,7 @@ const AddHotel = () => {
     formDataToSend.append("country", formData.country);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("pricePerNight", formData.pricePerNight.toString());
-    formDataToSend.append("rating", formData.rating.toString());
+    formDataToSend.append("starRating", formData.starRating.toString());
     formDataToSend.append("type", formData.type);
 
     formData.facilities.forEach((facility, index) => {
