@@ -79,6 +79,13 @@ const constructSearchQuery = (queryParams) => {
     };
   }
 
+  if (queryParams.facilities) {
+    constructedQuery.facilities = {
+      $all: Array.isArray(queryParams.facilities)
+        ? queryParams.facilities.split(",")
+        : queryParams.facilities.split(","),
+    };
+  }
   return constructedQuery;
 };
 export default router;

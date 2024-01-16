@@ -4,6 +4,7 @@ import { HotelContext } from "../context/hotelContext";
 import SearchResultsCard from "../components/SearchResultsCard";
 import Pagination from "../components/Pagination";
 import PriceFilter from "../components/PriceFilter";
+import FacilityFilter from "../components/FacilityFilter";
 
 const Search = () => {
   const search = useSearchContext();
@@ -31,13 +32,25 @@ const Search = () => {
     sortOption,
   };
 
+  const handleFacilityChange = (e) => {
+    const facility = e.target.value;
+
+    setSelectedFacilities((prevFacilities) =>
+      e.target.checked
+        ? [...prevFacilities, facility]
+        : prevFacilities.filter((prevFacility) => prevFacility !== facility)
+    );
+
+    console.log(searchParams);
+  };
+
   useEffect(() => {
     (async () => {
       const data = await searchHotel(searchParams);
       setHotelData(data);
     })();
-  }, [search, page, sortOption, selectedPrice]);
-  console.log(hotelData);
+  }, [search, page, sortOption, selectedPrice, selectedFacilities]);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
       <div className="rounded-lg border border-slate-300 bg-white p-5 h-fit sticky top-10">
@@ -50,10 +63,10 @@ const Search = () => {
             selectedPrice={selectedPrice}
             onChange={(e) => setSelectedPrice(e.target.value)}
           />
-          {/* <PriceFilter
-            selectedPrice={selectedPrice}
-            onChange={(value) => setSelectedPrice(value)}
-          /> */}
+          <FacilityFilter
+            selectedFacilities={selectedFacilities}
+            onChange={handleFacilityChange}
+          />
         </div>
       </div>
 
