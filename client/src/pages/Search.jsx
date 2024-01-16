@@ -5,6 +5,7 @@ import SearchResultsCard from "../components/SearchResultsCard";
 import Pagination from "../components/Pagination";
 import PriceFilter from "../components/PriceFilter";
 import FacilityFilter from "../components/FacilityFilter";
+import TypeFilter from "../components/TypeFilter";
 
 const Search = () => {
   const search = useSearchContext();
@@ -26,7 +27,7 @@ const Search = () => {
     childCount: search?.childCount.toString(),
     page: page?.toString(),
     stars: selectedStars,
-    types: selectedHotelTypes,
+    type: selectedHotelTypes,
     facilities: selectedFacilities,
     maxPrice: selectedPrice?.toString(),
     sortOption,
@@ -44,12 +45,30 @@ const Search = () => {
     console.log(searchParams);
   };
 
+  const handleTypeChange = (e) => {
+    const type = e.target.value;
+
+    setSelectedHotelTypes((prevTypes) =>
+      e.target.checked
+        ? [...prevTypes, type]
+        : prevTypes.filter((prevType) => prevType !== type)
+    );
+
+    console.log(searchParams);
+  };
   useEffect(() => {
     (async () => {
       const data = await searchHotel(searchParams);
       setHotelData(data);
     })();
-  }, [search, page, sortOption, selectedPrice, selectedFacilities]);
+  }, [
+    search,
+    page,
+    sortOption,
+    selectedPrice,
+    selectedFacilities,
+    selectedHotelTypes,
+  ]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
@@ -66,6 +85,11 @@ const Search = () => {
           <FacilityFilter
             selectedFacilities={selectedFacilities}
             onChange={handleFacilityChange}
+          />
+
+          <TypeFilter
+            selectedHotelTypes={selectedHotelTypes}
+            onChange={handleTypeChange}
           />
         </div>
       </div>

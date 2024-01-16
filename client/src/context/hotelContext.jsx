@@ -73,11 +73,12 @@ export const HotelProvider = ({ children }) => {
     queryParams.append("sortOption", searchParams.sortOption || "");
     queryParams.append("maxPrice", searchParams.maxPrice || "");
     queryParams.append("facilities", searchParams.facilities || "");
+    queryParams.append("type", searchParams.type || "");
     try {
       const res = await axios.get(`${BASE_URL}/hotels/search?${queryParams}`);
       const hotels = await res?.data;
       return hotels;
-      console.log(queryParams.getAll("facilities"));
+      console.log(queryParams.getAll("types"));
     } catch (error) {
       console.log(error);
     }
