@@ -67,8 +67,8 @@ export const HotelProvider = ({ children }) => {
     queryParams.append("destination", searchParams?.destination || "");
     queryParams.append("checkIn", searchParams?.checkIn || "");
     queryParams.append("checkOut", searchParams?.checkOut || "");
-    queryParams.append("adultCount", searchParams?.adultCount || "");
-    queryParams.append("childCount", searchParams?.childCount || "");
+    queryParams.append("adultGuest", searchParams?.adultGuest || "");
+    queryParams.append("childGuest", searchParams?.childGuest || "");
     queryParams.append("page", searchParams?.page || "");
     queryParams.append("sortOption", searchParams.sortOption || "");
     queryParams.append("maxPrice", searchParams.maxPrice || "");
@@ -78,7 +78,6 @@ export const HotelProvider = ({ children }) => {
       const res = await axios.get(`${BASE_URL}/hotels/search?${queryParams}`);
       const hotels = await res?.data;
       return hotels;
-      console.log(queryParams.getAll("types"));
     } catch (error) {
       console.log(error);
     }

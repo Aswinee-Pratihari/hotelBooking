@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import HotelDetails from "./pages/HotelDetails";
 import MyHotels from "./pages/MyHotels";
 import Search from "./pages/Search";
+import SearchPageLayout from "./layouts/SearchPageLayout";
 function App() {
   return (
     <Router>
@@ -79,10 +80,10 @@ function App() {
             <Route
               path="/search"
               element={
-                <RegistrationLayout>
+                <SearchPageLayout>
                   {" "}
                   <Search />
-                </RegistrationLayout>
+                </SearchPageLayout>
               }
             />
           </Routes>

@@ -6,22 +6,22 @@ export const SearchProvider = ({ children }) => {
   const [destination, setDestination] = useState("");
   const [checkIn, setCheckIn] = useState(new Date());
   const [checkOut, setCheckOut] = useState(new Date());
-  const [adultCount, setAdultCount] = useState(1);
-  const [childCount, setChildCount] = useState(0);
+  const [adultGuest, setAdultGuest] = useState(1);
+  const [childGuest, setChildGuest] = useState(0);
   const [hotelId, setHotelId] = useState("");
   const saveSearchValues = (
     destination,
     checkIn,
     checkOut,
-    adultCount,
-    childCount,
+    adultGuest,
+    childGuest,
     hotelId = ""
   ) => {
     setDestination(destination);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-    setChildCount(childCount);
-    setAdultCount(adultCount);
+    setChildGuest(childGuest);
+    setAdultGuest(adultGuest);
     if (hotelId) {
       setHotelId(hotelId);
     }
@@ -32,8 +32,9 @@ export const SearchProvider = ({ children }) => {
         destination,
         checkIn,
         checkOut,
-        childCount,
-        adultCount,
+
+        adultGuest,
+        childGuest,
         hotelId,
         saveSearchValues,
       }}

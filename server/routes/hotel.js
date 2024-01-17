@@ -60,9 +60,9 @@ router.get("/:id", async (req, res) => {
     const id = req.params.id.toString();
     const hotel = await Hotel.findById(id);
 
-    // if (!hotel) {
-    //   return res.status(404).json("Hotel not found");
-    // }
+    if (!hotel) {
+      return res.status(404).json("Hotel not found");
+    }
     return res.status(200).json(hotel);
   } catch (error) {
     console.log(error);
@@ -76,6 +76,24 @@ const constructSearchQuery = (queryParams) => {
   if (queryParams.maxPrice) {
     constructedQuery.pricePerNight = {
       $lte: parseInt(queryParams.maxPrice).toString(),
+    };
+  }
+  if (queryParams.destination) {
+    constructedQuery.$or = [
+      { city: new RegExp(queryParams.destination, "i") },
+      { country: new RegExp(queryParams.destination, "i") },
+    ];
+  }
+
+  if (queryParams.adultGuest) {
+    constructedQuery.adultGuest = {
+      $gte: parseInt(queryParams.adultGuest),
+    };
+  }
+
+  if (queryParams.childGuest) {
+    constructedQuery.childGuest = {
+      $gte: parseInt(queryParams.childGuest),
     };
   }
 

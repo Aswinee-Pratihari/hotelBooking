@@ -11,8 +11,8 @@ const SearchBar = () => {
   const [destination, setDestination] = useState(search.destination);
   const [checkIn, setCheckIn] = useState(search.checkIn);
   const [checkOut, setCheckOut] = useState(search.checkOut);
-  const [adultCount, setAdultCount] = useState(search.adultCount);
-  const [childCount, setChildCount] = useState(search.childCount);
+  const [adultGuest, setAdultGuest] = useState(search.adultGuest);
+  const [childGuest, setChildGuest] = useState(search.childGuest);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,8 +20,8 @@ const SearchBar = () => {
       destination,
       checkIn,
       checkOut,
-      childCount,
-      adultCount
+      adultGuest,
+      childGuest
     );
     navigate("/search");
   };
@@ -52,8 +52,8 @@ const SearchBar = () => {
             type="number"
             min={1}
             max={20}
-            value={adultCount}
-            onChange={(event) => setAdultCount(parseInt(event.target.value))}
+            value={adultGuest}
+            onChange={(event) => setAdultGuest(parseInt(event.target.value))}
           />
         </label>
         <label className="items-center flex">
@@ -63,8 +63,8 @@ const SearchBar = () => {
             type="number"
             min={0}
             max={20}
-            value={childCount}
-            onChange={(event) => setChildCount(parseInt(event.target.value))}
+            value={childGuest}
+            onChange={(event) => setChildGuest(parseInt(event.target.value))}
           />
         </label>
       </div>
